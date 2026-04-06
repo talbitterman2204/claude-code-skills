@@ -421,3 +421,172 @@ Available color themes (paste the chosen theme's CSS variables into `:root`):
 </body>
 </html>
 ```
+
+---
+
+## Slide Templates
+
+Use these templates when building `{{ALL_SLIDES}}`. Fill in real content — no placeholders.
+
+### Opening Slide
+
+```html
+<div class="slide active" id="slide-0">
+  <div class="opening-slide">
+    <h1>{{PRESENTATION_TITLE}}</h1>
+    <p class="subtitle">{{MILESTONE_COUNT}} milestones · {{TOTAL_IDEAS}} ideas</p>
+    <button class="start-btn" onclick="nextSlide()">Start →</button>
+  </div>
+</div>
+```
+
+### Landing Page Slide (only when nav includes landing page — option D)
+
+Place this as the second slide (after opening slide):
+
+```html
+<div class="slide" id="slide-landing">
+  <div class="landing-slide">
+    <h2>Overview</h2>
+    <div class="milestone-grid">
+      <div class="milestone-card" onclick="goToSlide(N)">
+        <div class="card-number">Milestone 1</div>
+        <h3>{{MILESTONE_TITLE}}</h3>
+      </div>
+      <!-- repeat for each milestone -->
+    </div>
+  </div>
+</div>
+```
+
+### Milestone Slide
+
+```html
+<div class="slide" id="slide-milestone-N">
+  <div class="milestone-slide">
+    <div class="milestone-header">
+      <div class="milestone-label">Milestone N of TOTAL</div>
+      <div class="milestone-title">{{MILESTONE_TITLE}}</div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" style="width: {{PROGRESS_PERCENT}}%"></div>
+      </div>
+      <div class="milestone-icon">{{RELEVANT_EMOJI}}</div>
+    </div>
+    <ul class="ideas-list">
+      <li class="idea-item" onclick="goToSlide(IDEA_SLIDE_INDEX)">
+        <span class="idea-dot"></span>
+        <span class="idea-text">{{IDEA_CLAIM}}</span>
+      </li>
+      <!-- repeat for each idea -->
+    </ul>
+  </div>
+</div>
+```
+
+**Progress percent formula:** `(milestone_number / total_milestones) * 100`
+
+**Emoji selection guidance:** Choose an emoji that metaphorically represents the milestone theme:
+- Growth/progress → 🚀 📈 🌱
+- Problem/challenge → ⚠️ 🔍 💡
+- People/community → 👥 🤝
+- Data/technology → 💻 📊 🔬
+- Change/transformation → 🔄 🌊 ⚡
+- Success/outcome → ✅ 🏆 🎯
+
+### Idea Slide — Quote visual
+
+Use when the idea is best represented by a direct quote or strong statement:
+
+```html
+<div class="slide" id="slide-idea-N">
+  <div class="idea-slide">
+    <a class="idea-back" onclick="goToSlide(MILESTONE_SLIDE_INDEX)">← Back to {{MILESTONE_TITLE}}</a>
+    <div class="idea-claim">{{IDEA_CLAIM}}</div>
+    <div class="idea-visual">
+      <div class="visual-quote">{{SUPPORTING_QUOTE_OR_ELABORATION}}</div>
+    </div>
+  </div>
+</div>
+```
+
+### Idea Slide — Numbered list visual
+
+Use when the idea is supported by several concrete points or examples:
+
+```html
+<div class="slide" id="slide-idea-N">
+  <div class="idea-slide">
+    <a class="idea-back" onclick="goToSlide(MILESTONE_SLIDE_INDEX)">← Back to {{MILESTONE_TITLE}}</a>
+    <div class="idea-claim">{{IDEA_CLAIM}}</div>
+    <div class="idea-visual">
+      <ul class="visual-list">
+        <li>{{POINT_1}}</li>
+        <li>{{POINT_2}}</li>
+        <li>{{POINT_3}}</li>
+      </ul>
+    </div>
+  </div>
+</div>
+```
+
+### Idea Slide — Comparison visual
+
+Use when the idea contrasts two approaches, before/after, or two perspectives:
+
+```html
+<div class="slide" id="slide-idea-N">
+  <div class="idea-slide">
+    <a class="idea-back" onclick="goToSlide(MILESTONE_SLIDE_INDEX)">← Back to {{MILESTONE_TITLE}}</a>
+    <div class="idea-claim">{{IDEA_CLAIM}}</div>
+    <div class="idea-visual">
+      <div class="visual-comparison">
+        <div class="col">
+          <h4>{{SIDE_A_LABEL}}</h4>
+          <p>{{SIDE_A_CONTENT}}</p>
+        </div>
+        <div class="col">
+          <h4>{{SIDE_B_LABEL}}</h4>
+          <p>{{SIDE_B_CONTENT}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+### Idea Slide — Timeline visual
+
+Use when the idea describes a sequence of events or steps over time:
+
+```html
+<div class="slide" id="slide-idea-N">
+  <div class="idea-slide">
+    <a class="idea-back" onclick="goToSlide(MILESTONE_SLIDE_INDEX)">← Back to {{MILESTONE_TITLE}}</a>
+    <div class="idea-claim">{{IDEA_CLAIM}}</div>
+    <div class="idea-visual">
+      <div class="visual-timeline">
+        <div class="timeline-step">
+          <div class="timeline-line"><div class="timeline-dot"></div><div class="timeline-connector"></div></div>
+          <div class="timeline-content"><h4>{{STEP_1_TITLE}}</h4><p>{{STEP_1_DESC}}</p></div>
+        </div>
+        <div class="timeline-step">
+          <div class="timeline-line"><div class="timeline-dot"></div><div class="timeline-connector"></div></div>
+          <div class="timeline-content"><h4>{{STEP_2_TITLE}}</h4><p>{{STEP_2_DESC}}</p></div>
+        </div>
+        <!-- add more steps as needed -->
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+### Visual Type Selection Guide
+
+| Content type | Visual to use |
+|---|---|
+| A strong claim or quote | Quote |
+| Multiple concrete examples or points | Numbered list |
+| Before/after, pros/cons, two perspectives | Comparison |
+| A process, sequence, or story over time | Timeline |
+| A single elaborated statement | Quote |
+| Steps in a method or framework | Numbered list or Timeline |
