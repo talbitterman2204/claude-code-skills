@@ -56,9 +56,11 @@ Available color themes (paste the chosen theme's CSS variables into `:root`):
 
 ## Base HTML File
 
+> **`{{TEXT_DIRECTION}}`:** Set to `rtl` for Hebrew (`he`), Arabic (`ar`), or other RTL languages. Set to `ltr` for all others.
+
 ```html
 <!DOCTYPE html>
-<html lang="{{LANGUAGE_CODE}}">
+<html lang="{{LANGUAGE_CODE}}" dir="{{TEXT_DIRECTION}}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -92,7 +94,7 @@ Available color themes (paste the chosen theme's CSS variables into `:root`):
       position: fixed;
       top: 0; left: 0; bottom: 0;
       overflow-y: auto;
-      display: {{SIDEBAR_DISPLAY}}; /* 'block' or 'none' */
+      display: {{SIDEBAR_DISPLAY}}; /* block or none — no quotes */
     }
     .sidebar h3 {
       font-size: 0.75rem;
@@ -370,8 +372,8 @@ Available color themes (paste the chosen theme's CSS variables into `:root`):
   <nav class="sidebar" id="sidebar">
     <h3>{{PRESENTATION_TITLE}}</h3>
     {{SIDEBAR_ITEMS}}
-    <!-- Example item:
-    <a class="sidebar-item" onclick="goToSlide(N)">Milestone Title</a>
+    <!-- Example item (N = the slide index of this milestone):
+    <a class="sidebar-item" data-slide="N" onclick="goToSlide(N)">Milestone 1 — Milestone Title</a>
     -->
   </nav>
 
@@ -397,7 +399,7 @@ Available color themes (paste the chosen theme's CSS variables into `:root`):
 
   function showSlide(n) {
     slides.forEach((s, i) => s.classList.toggle('active', i === n));
-    sidebarItems.forEach((item, i) => item.classList.toggle('active', i === n));
+    sidebarItems.forEach(item => item.classList.toggle('active', parseInt(item.dataset.slide) === n));
     document.getElementById('nav-counter').textContent = (n + 1) + ' / ' + slides.length;
     document.getElementById('btn-prev').disabled = n === 0;
     document.getElementById('btn-next').disabled = n === slides.length - 1;
