@@ -442,18 +442,19 @@ Use these templates when building `{{ALL_SLIDES}}`. Fill in real content — no 
 
 ### Landing Page Slide (only when nav includes landing page — option D)
 
-Place this as the second slide (after opening slide):
+Place this as the second slide (after opening slide). Its index is always **1**. The first milestone slide follows at index **2**, so milestone cards call `goToSlide(2)`, `goToSlide(3)`, etc.
 
 ```html
 <div class="slide" id="slide-landing">
   <div class="landing-slide">
     <h2>Overview</h2>
     <div class="milestone-grid">
-      <div class="milestone-card" onclick="goToSlide(N)">
+      <!-- Each card's goToSlide value = 2 + (milestone_number - 1) -->
+      <div class="milestone-card" onclick="goToSlide(2)">
         <div class="card-number">Milestone 1</div>
         <h3>{{MILESTONE_TITLE}}</h3>
       </div>
-      <!-- repeat for each milestone -->
+      <!-- repeat for each milestone, incrementing the goToSlide index -->
     </div>
   </div>
 </div>
