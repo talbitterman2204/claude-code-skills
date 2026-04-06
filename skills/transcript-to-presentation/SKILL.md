@@ -70,4 +70,46 @@ Wait for the user to answer all five questions. Then proceed to Phase 2.
 
 ## Phase 2 — HTML Generation
 
-[PHASE 2 INSTRUCTIONS — added in Task 3+]
+Once the user has confirmed the outline and answered all project settings questions, generate the HTML presentation.
+
+### How to Generate the HTML
+
+1. Read `skills/transcript-to-presentation/references/html-template.md` — it contains the complete base HTML file and all slide type templates.
+
+2. Build the slide sequence in this order:
+   - Slide 0: Opening slide (always first)
+   - Slide 1: Landing page (only if user chose navigation option D)
+   - Then for each milestone:
+     - Milestone slide
+     - Idea slides for each idea under that milestone (in order)
+
+3. For each **idea slide**, pick the visual type that best matches the content using the Visual Type Selection Guide in the reference file. Use real content extracted from the transcript — no generic filler.
+
+4. Set the HTML variables:
+   - `{{LANGUAGE_CODE}}`: e.g., `he` for Hebrew, `en` for English
+   - `{{TEXT_DIRECTION}}`: `rtl` for Hebrew or Arabic, `ltr` for all others
+   - `{{PRESENTATION_TITLE}}`: the confirmed title
+   - `{{THEME_CSS_VARIABLES}}`: paste the chosen theme's variable lines (from the reference file)
+   - `{{SIDEBAR_DISPLAY}}` and `{{MAIN_MARGIN_LEFT}}`:
+     - Sidebar visible (options B, C, D): `block` and `var(--sidebar-width)`
+     - Sidebar hidden (option A): `none` and `0`
+   - `{{ARROWS_DISPLAY}}`: `flex` for options A, C, D — `none` for option B
+   - `{{SIDEBAR_ITEMS}}`: one `<a>` per milestone, using `data-slide` set to the milestone's actual slide index:
+     ```html
+     <a class="sidebar-item" data-slide="N" onclick="goToSlide(N)">Milestone 1 — Title</a>
+     ```
+   - `{{ALL_SLIDES}}`: all slides assembled in order using the slide templates
+
+5. Write the completed file to the path the user specified. Use the Write tool — never cat or heredoc.
+
+6. Tell the user: "Presentation saved to `[path]`. Open it in your browser."
+
+### Export Options (offer after saving)
+
+Ask the user if they want either of these:
+
+> **Optional exports:**
+> - **PDF:** The file already has print-friendly CSS. Open it in Chrome or Edge, press Ctrl+P, set destination to "Save as PDF", and click Save.
+> - **PowerPoint:** I can use the pptx skill to convert this into a .pptx file. Want that?
+
+**If PPTX is requested:** Invoke the `anthropic-skills:pptx` skill and pass it the milestones/ideas structure extracted in Phase 1.
